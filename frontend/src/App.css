@@ -1,0 +1,253 @@
+.App {
+  text-align: center;
+}
+
+body {
+  background-color: #0e0e0e;
+  color: #fff !important;
+}
+
+h3 {
+  letter-spacing: 1px;
+  color: #fff;
+}
+
+.latest h3 {
+  color: #fff;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0 5px 5px 0;
+  border-left: 0.25rem solid #61dafb;
+  background-color: #57565618;
+  width: fit-content;
+  letter-spacing: 1px;
+  font-family: "Overlock", cursive;
+}
+
+.carousel-caption {
+  text-align: left;
+  width: 90%;
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: 200;
+  left: 5%;
+  line-height: 1;
+  bottom: 10%;
+}
+
+.carousel-indicators .active {
+  background-color: #038eb4;
+}
+
+.carousel-movie-container {
+  cursor: grab;
+}
+
+.backdrop {
+  margin: 0 auto;
+  opacity: 0.9;
+}
+
+.info {
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
+.about {
+  font-size: 1.2rem;
+  opacity: 0.8;
+}
+.carousel-caption h3 {
+  margin-bottom: 0.2rem;
+  color: #fff;
+  letter-spacing: 1px;
+  font-weight: 700;
+  font-family: "Cairo", sans-serif;
+  font-size: 2.2rem;
+}
+
+.overlay {
+  position: absolute;
+  right: 0;
+  height: 60%;
+  background: rgb(14, 14, 14);
+  background: linear-gradient(
+    0deg,
+    rgba(14, 14, 14, 1) 25%,
+    rgba(14, 14, 14, 0.8687850140056023) 50%,
+    rgba(14, 14, 14, 0.6110819327731092) 75%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  bottom: 0;
+  left: 0;
+  z-index: 9;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.carousel-inner {
+  height: 100%;
+  border-radius: 0.5rem;
+}
+
+.px-8 {
+  padding-left: 12em;
+  padding-right: 12em;
+}
+
+@media (min-width: 576px) {
+  .movie-col {
+    padding-right: 0;
+  }
+  footer p {
+    width: 60%;
+    margin: 2% auto;
+  }
+}
+
+.card {
+  border-radius: 0 0 6px 6px;
+}
+
+.card-body {
+  padding: 0.25rem;
+}
+
+.card-title {
+  margin-bottom: 0.25rem;
+  color: #61dafb;
+  font-family: "Jost", sans-serif;
+  font-size: 1rem;
+}
+
+.card-text {
+  font-family: "Rubik", sans-serif;
+  font-weight: 500;
+  margin: 0 0 0.25rem 2rem;
+  text-align: left;
+}
+
+.brief {
+  color: #575656;
+  width: 98%;
+  margin-left: auto;
+  align-items: center;
+  font-weight: bold;
+  justify-content: space-between;
+  font-family: "Karla", sans-serif;
+}
+
+.type {
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  background-color: #383838;
+  color: #fff;
+  margin: 0 7px;
+  font-size: 11px;
+}
+
+.page-item.active .page-link {
+  background-color: #026783;
+  border-color: #026783;
+}
+
+.page-item .page-link {
+  font-weight: bold;
+  background-color: #000;
+  color: #fff;
+  font-family: "Rubik", "Karla", sans-serif;
+}
+.pagination {
+  justify-content: center;
+}
+
+.details {
+  font-family: "Karla", "Cairo", sans-serif;
+  font-size: 15px;
+  padding-left: 2px;
+  font-weight: 400;
+  opacity: 0.7;
+}
+
+.details .other::before {
+  display: inline-block;
+  margin: 0 0.5rem 0.2rem;
+  content: "";
+  font-size: 1rem;
+  line-height: 0.5rem;
+  padding: 2px;
+  border-radius: 50%;
+  vertical-align: middle;
+  background-color: #646464;
+}
+.genres {
+  justify-content: space-between;
+}
+.genre-btn {
+  border-radius: 20px;
+  border: 1px solid #61dafb;
+  padding: 0.2rem 0.75rem;
+  font-size: 14px;
+  font-family: "Rubik", sans-serif;
+}
+
+.small-text {
+  font-family: "Jost", sans-serif, "Cairo";
+  font-size: 14px;
+}
+
+.movie-title {
+  letter-spacing: 1px;
+  font-family: "Overlock", cursive;
+  font-size: 2.5rem;
+  color: #fff;
+}
+
+.overview h4 {
+  letter-spacing: 1px;
+  color: #fff;
+  font-family: "Roboto", sans-serif;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.overview {
+  color: rgba(255, 255, 255, 0.493);
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0 5px 5px 0;
+  border-left: 0.4rem solid #555555;
+  background-color: #57565618;
+  width: fit-content;
+  font-weight: 400;
+  letter-spacing: 1px;
+  font-family: "Cairo", sans-serif;
+  font-size: 15px;
+}
+.pagination button {
+  color: #fff !important;
+  font-weight: 600;
+}
+footer {
+  background-color: #090909;
+  font-family: "Poppins", sans-serif;
+}
+
+@media (max-width: 500px) {
+  .trailer {
+    height: 230px;
+  }
+}
+@media (max-width: 460px) {
+  .flex-xs-column {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+  .genres {
+    margin: 2% 0;
+  }
+  .movie-title {
+    font-size: 2.2rem;
+  }
+}
