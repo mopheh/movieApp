@@ -1,42 +1,36 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
+import Loader from "./Loader"
+import Message from "./Message"
+import { useSelector, useDispatch } from "react-redux"
 import { Carousel, Image } from "react-bootstrap"
-import axios from "axios"
+import { getGenres } from "../action/movieAction"
 
 function MovieCarousel() {
-  const [data, setData] = useState([])
-  const [genres, setGenres] = useState({})
+  const dispatch = useDispatch()
 
-  const fetchMovies = async () => {
-    const { data } = await axios.get(
-      "https://api.themoviedb.org/3/trending/all/day?api_key=235ba309beb6b48e95dc065bc6ac50cf"
-    )
-    setData(data.results)
-  }
-  const fetchGenres = async () => {
-    const { data } = await axios.get(
-      "https://api.themoviedb.org/3/genre/movie/list?api_key=235ba309beb6b48e95dc065bc6ac50cf&language=en-US"
-    )
-    data.genres.map((genre) =>
-      setGenres((prevValues) => {
-        return { ...prevValues, [genre.id]: genre.name }
-      })
-    )
-  }
+  const genreList = useSelector((state) => state.genres)
+  const { genres } = genreList
+
+  const movieList = useSelector((state) => state.movieList)
+  const { loading: loadingMovie, movies, error } = movieList
 
   useEffect(() => {
-    fetchMovies()
-    fetchGenres()
-  }, [])
+    dispatch(getGenres())
+  }, [dispatch])
   return (
     <>
-      <Carousel
-        interval={3000}
-        pause="hover"
-        controls={false}
-        className="bg-dark rounded mt-2"
-      >
-        {data &&
-          data.slice(0, 5).map((movie) => (
+      {loadingMovie ? (
+        <Loader />
+      ) : error ? (
+        <Message variant="danger">{error}</Message>
+      ) : (
+        <Carousel
+          interval={3000}
+          pause="hover"
+          controls={false}
+          className="bg-dark rounded mt-2"
+        >
+          {movies.slice(0, 5).map((movie) => (
             <Carousel.Item key={movie.id}>
               <Image
                 className="d-block w-100 backdrop"
@@ -64,13 +58,14 @@ function MovieCarousel() {
                   </span>
                 </p>
                 <p className="about">
-                  {movie.overview.split(" ").slice(0, 50).join(" ")}{" "}
+                  {movie.overview.split(" ").slice(0, 50).join(" ")}
                 </p>
               </Carousel.Caption>
               <div className="overlay"></div>
             </Carousel.Item>
           ))}
-      </Carousel>
+        </Carousel>
+      )}{" "}
     </>
   )
 }

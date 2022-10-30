@@ -59,9 +59,12 @@ function MovieCard({ data, pageId }) {
                     </span>
                     <div className="d-flex brief mb-2">
                       <span>
-                        {movie.media_type === "movie"
+                        {movie.media_type === "movie" &&
+                        movie.release_date !== undefined
                           ? movie.release_date.slice(0, 4)
-                          : movie.first_air_date.slice(0, 4)}
+                          : movie.first_air_date !== undefined
+                          ? movie.first_air_date.slice(0, 4)
+                          : ""}
                       </span>
                       <span>
                         {!runtime[index]

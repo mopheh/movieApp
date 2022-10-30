@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import Loader from "../components/Loader"
+import Message from "../components/Message"
 import ReactPlayer from "react-player"
 import axios from "axios"
 import { Link, useParams } from "react-router-dom"
 import { Row, Col, Image } from "react-bootstrap"
+import { getMovieDetails } from "../action/movieAction"
 
 function MovieScreen() {
-  const [details, setDetails] = useState(0)
+  const dispatch = useDispatch()
   const [videoId, setVideoId] = useState("")
   const { id } = useParams()
 
-  const getMovieDetails = async (id) => {
-    const { data } = await axios.get(
-      `https://api.themoviedb.org/3/movie/${id}?api_key=235ba309beb6b48e95dc065bc6ac50cf&language=en-US`
-    )
-    setDetails(data)
-  }
+  const movieDetails = useSelector((state) => state.movieDetails)
+  const { loading, movie: details, error } = movieDetails
 
   const getTrailerId = async (id) => {
     const { data } = await axios.get(
@@ -33,28 +33,31 @@ function MovieScreen() {
   }
 
   useEffect(() => {
-    if (id) {
+    dispatch(getMovieDetails(id))
+    if (!videoId) {
       getTrailerId(id)
-      getMovieDetails(id)
-      if (!videoId) {
-        getTrailerId(id)
-      }
     }
-  }, [videoId, id])
+  }, [id, dispatch, videoId])
 
   return (
     <>
-      {details && (
+      <Link className="btn btn-light mb-3" to="/">
+        Go Back
+      </Link>
+      {loading || Object.keys(details).length === 0 ? (
+        <Loader />
+      ) : error ? (
+        <Message variant="danger"> {error} </Message>
+      ) : Object.keys(details).length > 0 ? (
         <>
-          <Link className="btn btn-light mb-3" to="/">
-            Go Back
-          </Link>
           <h1 className="movie-title mb-1"> {details.title} </h1>
           <div className="d-flex justify-content-between my-2 flex-xs-column align-items-center">
             <div className="details">
-              <span>{details.release_date}</span>{" "}
-              <span className="other">Movie</span>{" "}
-              <span className="other">{details.runtime} minutes</span>
+              <span>{details.release_date}</span>
+              <span className="other">Movie</span>
+              <span className="other">
+                {details.runtime !== undefined && details.runtime} minutes
+              </span>
             </div>
             <div className="genres">
               {details.genres.map((genre) => (
@@ -126,6 +129,8 @@ function MovieScreen() {
             </div>
           </div>
         </>
+      ) : (
+        ""
       )}
     </>
   )

@@ -1,49 +1,40 @@
 import React, { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import MovieCarousel from "../components/MovieCarousel"
 import { useParams, useNavigate } from "react-router-dom"
-import axios from "axios"
 import { Row, Col } from "react-bootstrap"
 import { Pagination } from "@mui/material"
 import MovieCard from "../components/MovieCard"
 import { Link } from "react-router-dom"
+import { listMovies } from "../action/movieAction"
+import Loader from "../components/Loader"
+import Message from "../components/Message"
 
 function HomeScreen() {
-  const [data, setData] = useState([])
-  const [pages, setPages] = useState("")
+  const dispatch = useDispatch()
+
   const { page: pageId, type, keyword } = useParams()
   const search_type = type ? type : "all"
   const [page, setPage] = useState(pageId)
+
   const navigate = useNavigate()
 
-  const fetchMovies = async (page, type) => {
-    const { data } = await axios.get(
-      `https://api.themoviedb.org/3/trending/${type}/day?api_key=235ba309beb6b48e95dc065bc6ac50cf&page=${
-        page || 1
-      }`
-    )
-    setData(data.results)
-    setPages(data.total_pages)
-  }
-  const fetchKeyword = async (page, keyword) => {
-    console.log(keyword)
-    const { data } = await axios.get(
-      `https://api.themoviedb.org/3/search/multi?api_key=235ba309beb6b48e95dc065bc6ac50cf&language=en-US&include_adult=true&query=${keyword}&page=${
-        page || 1
-      }`
-    )
-
-    setData(data.results)
-    setPages(data.total_pages)
-  }
+  const movieList = useSelector((state) => state.movieList)
+  const { loading, movies, error } = movieList
+  const pages = useSelector((state) => state.pages)
 
   useEffect(() => {
+    dispatch({
+      type: "API_KEY_SUCCESS",
+      payload: "235ba309beb6b48e95dc065bc6ac50cf",
+    })
     setPage(pageId)
     if (keyword) {
-      fetchKeyword(page, keyword)
+      dispatch(listMovies(page, search_type, keyword))
     } else {
-      fetchMovies(page, search_type)
+      dispatch(listMovies(page, search_type, keyword))
     }
-  }, [pageId, page, search_type, keyword])
+  }, [pageId, dispatch, page, search_type, keyword])
 
   const handleChange = (event, value) => {
     if (keyword) {
@@ -71,7 +62,13 @@ function HomeScreen() {
             : "Latest Series"}
         </h3>
         <Row>
-          <MovieCard data={data} pageId={pageId} />
+          {loading ? (
+            <Loader />
+          ) : error ? (
+            <Message variant="danger"> {error} </Message>
+          ) : (
+            <MovieCard data={movies} pageId={pageId} />
+          )}
         </Row>
         {!pageId ? (
           <Link to={`/${search_type}/page/1`} className="btn btn-primary">
